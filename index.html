@@ -5488,6 +5488,85 @@
             window.addEventListener('load', initPremiumPopup);
         }
 
+<script>
+/* -------------------------------
+   GLOBAL HISTORY HANDLER
+--------------------------------*/
 
+// Push initial state
+if (!history.state) {
+    history.replaceState({ page: "home" }, "", "");
+}
+
+/* -------------------------------
+   HANDLE BACK BUTTON
+--------------------------------*/
+window.addEventListener("popstate", function (event) {
+
+    // Close Mobile Menu
+    const mobileMenu = document.getElementById("mobile-menu");
+    if (mobileMenu && !mobileMenu.classList.contains("translate-x-full")) {
+        mobileMenu.classList.add("translate-x-full");
+        return;
+    }
+
+    // Close View All Modal
+    const viewAllModal = document.getElementById("view-all-modal");
+    if (viewAllModal && !viewAllModal.classList.contains("hidden")) {
+        viewAllModal.classList.add("hidden");
+        return;
+    }
+
+    // Close Property Modal
+    const propertyModal = document.getElementById("property-details-modal");
+    if (propertyModal && !propertyModal.classList.contains("hidden")) {
+        propertyModal.classList.add("hidden");
+        return;
+    }
+
+    // Close Article Modal
+    const articleModal = document.getElementById("article-details-modal");
+    if (articleModal && !articleModal.classList.contains("hidden")) {
+        articleModal.classList.add("hidden");
+        return;
+    }
+
+    // Close Text Modal
+    const textModal = document.getElementById("text-content-modal");
+    if (textModal && !textModal.classList.contains("hidden")) {
+        textModal.classList.add("hidden");
+        return;
+    }
+
+    // If nothing open → scroll to top
+    window.scrollTo({ top: 0, behavior: "smooth" });
+});
+
+
+/* -------------------------------
+   PUSH STATE WHEN OPENING UI
+--------------------------------*/
+
+// Mobile menu open
+document.querySelectorAll(".mobile-menu-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+        history.pushState({ page: "menu" }, "", "");
+    });
+});
+
+// Example: when opening any modal
+function openModal(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        modal.classList.remove("hidden");
+        history.pushState({ page: modalId }, "", "");
+    }
+}
+
+// Example usage (replace your existing open logic)
+// openModal("view-all-modal");
+// openModal("property-details-modal");
+
+</script>
 </body>
 </html>
